@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KitRoom | Borrowing guide</title>
+  <style>
+    :root {
+      --paper: #f6f4ed;
+      --card: white;
+      --ink: #213d38;
+      --accent: #205d50;
+      --on-accent: white;
+      --ready: #438c60;
+      --busy: #b44543;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 1rem/1.55 Arial, sans-serif;
+    }
+
+    main,
+    .bar {
+      width: min(48rem, 90%);
+      margin: auto;
+    }
+
+    header {
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+
+    .bar {
+      padding: 1rem 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font: bold clamp(2rem, 6vw, 3.5rem)/1.1 Georgia, serif;
+      margin-bottom: .5rem;
+    }
+
+    h2 {
+      font: bold 1.5rem Georgia, serif;
+    }
+
+    section,
+    details {
+      margin: 1rem 0;
+      padding: 1.2rem;
+      border: 1px solid currentColor;
+      border-radius: .8rem;
+      background: var(--card);
+    }
+
+    summary,
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .item {
+      padding: .6rem 0;
+    }
+
+    .dot {
+      display: inline-block;
+      width: .85rem;
+      height: .85rem;
+      border-radius: 50%;
+      margin-right: .5rem;
+    }
+
+    .ready {
+      background: var(--ready);
+    }
+
+    .busy {
+      background: var(--busy);
+      border-radius: 0;
+      transform: rotate(45deg);
+    }
+
+    button,
+    select {
+      font: inherit;
+      padding: .45rem .7rem;
+    }
+
+    button {
+      background: var(--accent);
+      color: var(--on-accent);
+      border: 1px solid currentColor;
+      border-radius: .4rem;
+    }
+
+    label {
+      display: inline-block;
+      margin: .3rem .7rem .3rem 0;
+    }
+
+    footer {
+      padding: 1rem 0 2rem;
+    }
+
+    /* Preference styles */
+    html.palette {
+      --ready: #17659b;
+      --busy: #ac5200;
+    }
+
+    html.large {
+      font-size: 125%;
+    }
+
+    html.spaced .guide {
+      line-height: 1.8;
+      letter-spacing: .05em;
+      word-spacing: .1em;
+    }
+
+    html.contrast {
+      --paper: #111;
+      --card: #171717;
+      --ink: #fff;
+      --accent: #ffe66b;
+      --on-accent: #111;
+    }
+
+    html.links .guide a {
+      text-decoration: underline double;
+      font-weight: bold;
+    }
+
+    html.focus :focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="bar"><strong>KitRoom</strong><span>College media desk</span></div>
+  </header>
+  <main>
+    <h1>Borrowing guide</h1>
+    <p>Choose equipment for your next shoot and arrange collection.</p>
+    <details>
+      <summary>Display settings</summary>
+      <!-- Display controls -->
+      <label><input type="checkbox" id="palette"> Blue and orange markers</label>
+      <label><input type="checkbox" id="large">Large text</label>
+      <label><input type="checkbox" id="spaced">Relaxed spacing</label>
+      <label><input type="checkbox" id="contrast">High contrast</label>
+      <label><input type="checkbox" id="links">Highlight links</label>
+      <label><input type="checkbox" id="focus">Enhanced focus</label>
+    </details>
+    <section class="guide">
+      <h2>Before you collect</h2>
+      <p>Bring your student card to the media desk. Each camera comes with a charged battery and a memory card. Check
+        the kit with a technician before you leave.</p>
+      <p>Check <a href="#stock">equipment availability</a> before you <a href="#book">reserve an item</a>.</p>
+    </section>
+    <section id="stock">
+      <h2>Equipment availability</h2>
+      <p>Green means available. Red means on loan.</p>
+      <div class="item"><span class="dot ready"></span>Available Mirrorless camera</div>
+      <div class="item"><span class="dot busy"></span>Busy Field recorder</div>
+      <div class="item"><span class="dot ready"></span>Available Travel tripod</div>
+    </section>
+    <section id="book">
+      <h2>Reserve an item</h2>
+      <form>
+        <label for="kit">Available equipment</label>
+        <select id="kit">
+          <option>Mirrorless camera</option>
+          <option>Travel tripod</option>
+        </select>
+        <button>Reserve</button>
+      </form>
+      <p id="result" role="status"></p>
+    </section>
+    <footer>Collection desk · Media studio</footer>
+  </main>
+  <script>
+    const kit = document.querySelector('#kit');
+    document.querySelector('form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.querySelector('#result').textContent = kit.value + ' reserved for collection.';
+    });
+    // Display setting events
+    function connectSetting(id, className) {
+      const control = document.getElementById(id);
+      control.addEventListener('change', function () {
+        document.documentElement.classList.toggle(className, control.checked);
+      });
+    }
+    connectSetting('palette', 'palette');
+    connectSetting('large', 'large');
+    connectSetting("spaced", "spaced")
+    connectSetting("contrast", "contrast")
+    connectSetting("links", "links")
+    connectSetting("focus", "focus")
+  </script>
+</body>
+
+</html>
